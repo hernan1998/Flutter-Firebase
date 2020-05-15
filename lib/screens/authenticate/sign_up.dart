@@ -22,6 +22,9 @@ class _SignUpState extends State<SignUp> {
   //Text field state
   String email = '';
   String password = '';
+  String name = '';
+  String lastname = '';
+  String phone = '';
   String error ='';
 
   
@@ -74,6 +77,30 @@ class _SignUpState extends State<SignUp> {
                 },
               ),
               SizedBox(height: 20.0),
+              TextFormField(
+                decoration: TextInputDecoration.copyWith(hintText: 'Name'),
+                validator: (val) => val.isEmpty ? 'Enter a Name' : null,
+                onChanged: (val){
+                  setState(() => name = val);
+                },
+              ),
+              SizedBox(height: 20.0),
+              TextFormField(
+                decoration: TextInputDecoration.copyWith(hintText: 'Last Name'),
+                validator: (val) => val.isEmpty ? 'Enter a Last name' : null,
+                onChanged: (val){
+                  setState(() => lastname = val);
+                },
+              ),
+              SizedBox(height: 20.0),
+              TextFormField(
+                decoration: TextInputDecoration.copyWith(hintText: 'Phone number'),
+                validator: (val) => !val.contains(new RegExp(r'^[0-9]*$')) ? 'Enter a Phone number valid' : null,
+                onChanged: (val){
+                  setState(() => phone = val);
+                },
+              ),
+              SizedBox(height: 20.0),
               RaisedButton(
                 color: Colors.pink[400],
                 child: Text(
@@ -85,7 +112,7 @@ class _SignUpState extends State<SignUp> {
                     setState(() {
                       loading = true;
                     });
-                    dynamic result = await _auth.signUpWithEmailPassword(email, password);
+                    dynamic result = await _auth.signUpWithEmailPassword(email, password, name, lastname, phone);
                     if(result == null){
                       setState((){
                         error = 'Please supply a valid email';
