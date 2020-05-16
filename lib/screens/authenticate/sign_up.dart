@@ -1,3 +1,8 @@
+import 'dart:io';
+import 'dart:ui';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/Shared/loading.dart';
 import 'package:flutter_firebase/services/auth.dart';
@@ -26,7 +31,15 @@ class _SignUpState extends State<SignUp> {
   String lastname = '';
   String phone = '';
   String error ='';
+  File sampleImage;
 
+  Future getImage() async{
+    var tempImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      sampleImage = tempImage;
+    });
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -101,6 +114,15 @@ class _SignUpState extends State<SignUp> {
                 },
               ),
               SizedBox(height: 20.0),
+              
+              RaisedButton(
+                color: Colors.pink[400],
+                child: sampleImage == null ? Text(
+                  'Cargar Imagen',
+                  style: TextStyle(color: Colors.white),
+                ): enableUpload(),
+                onPressed: getImage,
+              ),
               RaisedButton(
                 color: Colors.pink[400],
                 child: Text(
@@ -119,7 +141,11 @@ class _SignUpState extends State<SignUp> {
                         loading = false;
                       });
                     }
+                    final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('myimage.jpg');
+                    final StorageUploadTask task = firebaseStorageRef.putFile(sampleImage);
                   }
+                  
+                  
                 },
               ),
               SizedBox(height: 12.0,),
@@ -131,6 +157,13 @@ class _SignUpState extends State<SignUp> {
           ),
         ),
       ),
+    );
+  }
+  Widget enableUpload(){
+    return Container(
+      child: Column(children: <Widget>[
+        Image.file(sampleImage, height: 200.0, width: 200.0),
+      ],),
     );
   }
 }
