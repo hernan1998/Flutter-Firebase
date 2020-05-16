@@ -141,7 +141,7 @@ class _SignUpState extends State<SignUp> {
                         loading = false;
                       });
                     }
-                    final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('myimage.jpg');
+                    final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(result.uid+'.jpg');
                     final StorageUploadTask task = firebaseStorageRef.putFile(sampleImage);
                   }
                   
