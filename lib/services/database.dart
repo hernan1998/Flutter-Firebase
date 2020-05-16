@@ -13,7 +13,8 @@ class DatabaseService {
     return await userCollection.document(uid).setData({
       'name': name,
       'lastname': lastname,
-      'phone': phone
+      'phone': phone,
+      'uid': uid,
     });
   }
 
@@ -23,7 +24,8 @@ class DatabaseService {
       return CrewMember(
         name: doc.data['name'] ?? '',
         lastname: doc.data['lastname'] ?? '',
-        phone: doc.data['phone'] ?? ''
+        phone: doc.data['phone'] ?? '',
+        uid: doc.data['uid'] ?? ''
       );
     }).toList();
   }
