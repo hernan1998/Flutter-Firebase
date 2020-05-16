@@ -189,10 +189,10 @@ Future<String> uploadImage(res, samImg) async {
   final StorageReference firebaseStorageRef =
       FirebaseStorage.instance.ref().child(res.uid + '.jpg');
   final StorageUploadTask task = firebaseStorageRef.putFile(samImg);
-  await DatabaseService(uid: res.uid).updateUserData('https://firebasestorage.googleapis.com/v0/b/fir-tutorial4flutter.appspot.com/o/D9a126rBOydPaTQ6s36PLUkWDqu1.jpg?alt=media&token=2e0b4377-69c9-402f-b317-52c3cf464e68');
 
   var downUrl = await (await task.onComplete).ref.getDownloadURL();
   var url = downUrl.toString();
+  await DatabaseService(uid: res.uid).updateUserData(url);
 
   print(url);
 
