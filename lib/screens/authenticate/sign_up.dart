@@ -140,9 +140,10 @@ class _SignUpState extends State<SignUp> {
                         error = 'Please supply a valid email';
                         loading = false;
                       });
+                    }else{
+                      final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(result.uid+'.jpg');
+                      final StorageUploadTask task = firebaseStorageRef.putFile(sampleImage);
                     }
-                    final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('myimage.jpg');
-                    final StorageUploadTask task = firebaseStorageRef.putFile(sampleImage);
                   }
                   
                   
