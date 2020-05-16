@@ -17,6 +17,7 @@ class CrewTitle extends StatelessWidget {
           leading: CircleAvatar(
             radius: 25.0,
             backgroundColor: Colors.brown,
+            backgroundImage: NetworkImage(crew.url),
           ),
           title: Text(crew.name),
           subtitle: Text('Last Name: ${crew.lastname},  Phone number: ${crew.phone}'),
