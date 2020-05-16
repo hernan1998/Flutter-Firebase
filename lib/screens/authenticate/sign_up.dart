@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_firebase/services/database.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:flutter/material.dart';
@@ -143,6 +144,7 @@ class _SignUpState extends State<SignUp> {
                     }else{
                       final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(result.uid+'.jpg');
                       final StorageUploadTask task = firebaseStorageRef.putFile(sampleImage);
+                      await DatabaseService(uid: result.uid).updateUserData('https://firebasestorage.googleapis.com/v0/b/fir-tutorial4flutter.appspot.com/o/D9a126rBOydPaTQ6s36PLUkWDqu1.jpg?alt=media&token=2e0b4377-69c9-402f-b317-52c3cf464e68');
                     }
                   }
                   

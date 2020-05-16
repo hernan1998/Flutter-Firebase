@@ -18,6 +18,12 @@ class DatabaseService {
     });
   }
 
+  Future updateUserData(String url) async{
+    return await userCollection.document(uid).updateData({
+      'url': url,
+    });
+  }
+
   // Crew List
   List<CrewMember> _crewListSnapshot(QuerySnapshot snapshot){
     return snapshot.documents.map((doc){
@@ -25,7 +31,8 @@ class DatabaseService {
         name: doc.data['name'] ?? '',
         lastname: doc.data['lastname'] ?? '',
         phone: doc.data['phone'] ?? '',
-        uid: doc.data['uid'] ?? ''
+        uid: doc.data['uid'] ?? '',
+        url: doc.data['url'] ?? '',
       );
     }).toList();
   }
