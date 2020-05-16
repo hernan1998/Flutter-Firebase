@@ -153,9 +153,7 @@ class _SignUpState extends State<SignUp> {
                               loading = false;
                             });
                           } else {
-                            print("HOLAAAAAA");
                             uploadImage(result, sampleImage);
-                            print("ADIOOOOOOOOOOS");
                           }
                         }
                       },
