@@ -22,7 +22,7 @@ class CrewTitle extends StatelessWidget {
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text("You want to add your frien list to your list's"),
+                  Text("You want to add your friend list to your list's"),
                 ],
               ),
             ),
