@@ -9,6 +9,34 @@ class CrewTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    Future<void> _showMyDialog() async {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Add List'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text("You want to add your frien list to your list's"),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton.icon(
+                icon: Icon(Icons.assignment_turned_in),
+                label: Text('Add'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Padding(
       padding: EdgeInsets.only(top: 8.0),
       child: Card(
@@ -21,8 +49,17 @@ class CrewTitle extends StatelessWidget {
           ),
           title: Text(crew.name),
           subtitle: Text('Last Name: ${crew.lastname},  Phone number: ${crew.phone}'),
+          trailing: Icon(Icons.add_circle),
+          isThreeLine: true,
+          onTap: ()=>{
+            _showMyDialog()
+          },
         ),
       ),
     );
+
+  
   }
+
+  
 }
