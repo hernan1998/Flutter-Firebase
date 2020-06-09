@@ -15,6 +15,9 @@ class CrewTitle extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0)
+            ),
             title: Text('Add List'),
             content: SingleChildScrollView(
               child: ListBody(
