@@ -17,7 +17,7 @@ class Home extends StatelessWidget {
         child: Scaffold(
         backgroundColor: Colors.brown[100],
         appBar: AppBar(
-          title: Text("To Do's List"),
+          title: Text("Friend´s shopping list"),
           backgroundColor: Colors.brown[400],
           elevation: 0.0,
           actions: <Widget>[
@@ -31,6 +31,14 @@ class Home extends StatelessWidget {
           ],
         ),
         body: CrewList(),
+        floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          // Add your onPressed code here!
+        },
+        label: Text('Your List'),
+        icon: Icon(Icons.local_mall),
+        backgroundColor: Colors.pink,
+      ),
       ),
     );
   }
