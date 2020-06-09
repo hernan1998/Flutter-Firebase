@@ -63,7 +63,7 @@ class _SignUpState extends State<SignUp> {
               padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
               child: Form(
                 key: _formKey,
-                child: Column(
+                child: ListView(
                   children: <Widget>[
                     Title(
                       color: Colors.black,
