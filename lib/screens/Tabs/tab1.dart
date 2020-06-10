@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_firebase/models/products_info.dart';
+import 'package:flutter_firebase/screens/Tabs/tab2.dart';
+import 'package:provider/provider.dart';
 
 class ShoppingList extends StatefulWidget {
   @override
@@ -9,7 +12,7 @@ class ShoppingList extends StatefulWidget {
 class _ShoppingListState extends State<ShoppingList> {
   @override
   Widget build(BuildContext context) {
-    //final List<ProductsInfo> crews = Provider.of<List<ProductsInfo>>(context);
+    final productos = Provider.of<List<ProductsInfo>>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -17,53 +20,61 @@ class _ShoppingListState extends State<ShoppingList> {
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
       ),
-      body: Container(margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 80.0),
+      body: Container(
+        margin: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 80.0),
         child: ListView.builder(
-          itemBuilder: (context, position) {
-            return Column(
-              children: <Widget>[
-                Card(
-                  margin: EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        "Nombre del producto + precio",
-                        style: TextStyle(
-                            fontSize: 22.0, fontWeight: FontWeight.bold),
-                      ),
-                      Flexible(
-                        child: TextField(
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            WhitelistingTextInputFormatter.digitsOnly
-                          ],
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
+            itemCount: productos.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Column(
+                children: <Widget>[
+                  Card(
+                    elevation: 5.0,
+                    margin: EdgeInsets.fromLTRB(20.0, 1.0, 20.0, 1.0),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            productos[index].name,
+                            style: TextStyle(
+                                fontSize: 18.0, fontWeight: FontWeight.bold),
                           ),
-                        ),
+                          Flexible(
+                            child: Container(
+                              width: 50.0,
+                              child: TextField(
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  WhitelistingTextInputFormatter.digitsOnly
+                                ],
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-                Divider(
-                  height: 2.0,
-                  color: Colors.grey,
-                )
-              ],
-            );
-          },
-          itemCount: 8,
-        ),
+                  SizedBox(
+                    height: 10.0,
+                  )
+                ],
+              );
+            }),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          // Add your onPressed code here!
+          Navigator.push(
+              context,
+              new MaterialPageRoute(
+                  builder: (context) => FriendsShoppingList()));
         },
         label: Text('Update'),
         icon: Icon(Icons.update),
         backgroundColor: Colors.pink,
-
       ),
     );
   }

@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class Products with ChangeNotifier {
-  Products() {}
 
   List<ProductsInfo> convertToProduct(List data) {
     List<ProductsInfo> array = [];
@@ -20,7 +19,7 @@ class Products with ChangeNotifier {
     return array;
   }
 
-  Future<List> getAll() async {
+  Future<List<ProductsInfo>> getAll() async {
     http.Response response = await http.get(
         Uri.encodeFull("https://frutiland.herokuapp.com/search"),
         headers: {"Accept": "application/json"});
@@ -32,7 +31,7 @@ class Products with ChangeNotifier {
     return productInfoArray;
   }
 
-  Future<List> search({category, term}) async {
+  Future<List<ProductsInfo>> search({category, term}) async {
     if(category == null && term == null) return await getAll();
     print('esto noj se ejecuta, si esta en pantalla, lalme a servicio tecnico');
     if(term == null) term = '';
