@@ -5,6 +5,7 @@ import 'package:flutter_firebase/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_firebase/screens/home/crew_list.dart';
+import 'package:flutter_firebase/models/products.dart';
 
 class Home extends StatelessWidget {
 
@@ -33,7 +34,8 @@ class Home extends StatelessWidget {
         body: CrewList(),
         floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          // Add your onPressed code here!
+          //Replace strings with search content, if null all elements will be obtained
+          Products().search(category: "VERDURA", term: "pa");          
         },
         label: Text('Your List'),
         icon: Icon(Icons.local_mall),
