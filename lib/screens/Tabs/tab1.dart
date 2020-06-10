@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_firebase/models/products_info.dart';
-import 'package:flutter_firebase/screens/Tabs/tab2.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingList extends StatefulWidget {
@@ -45,6 +44,11 @@ class _ShoppingListState extends State<ShoppingList> {
                             child: Container(
                               width: 50.0,
                               child: TextField(
+                                onChanged: (String value) {
+                                  productos[index].onChangeNumber(int.parse(value));
+                                  print(value);
+                                  print(productos[index].number);
+                                },
                                 keyboardType: TextInputType.number,
                                 inputFormatters: <TextInputFormatter>[
                                   WhitelistingTextInputFormatter.digitsOnly

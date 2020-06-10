@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/models/crew.dart';
-import 'package:flutter_firebase/screens/Tabs/tab3.dart';
 import 'package:provider/provider.dart';
 
 class FriendsShoppingList extends StatefulWidget {
