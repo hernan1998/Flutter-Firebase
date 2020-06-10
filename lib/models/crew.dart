@@ -8,7 +8,9 @@ class CrewMember {
   final String uid;
   final String url;
   bool agregarLista = false; //Agregar a mi lista para comprar su mercado
-  Icon icono = new Icon(Icons.add, color: Colors.pinkAccent);
+  Icon icono = new Icon(Icons.add,
+      color: Colors.pinkAccent); //Icono de agrregar o quitar lista
+  int totalPrecio = 0; //total precio de la lista
 
   CrewMember({
     this.name,
@@ -17,6 +19,10 @@ class CrewMember {
     this.uid,
     this.url,
   });
+
+  void setTotalPrecio(int precio) {
+    totalPrecio = precio;
+  }
 
   void onSelectList(bool valor) {
     agregarLista = valor;

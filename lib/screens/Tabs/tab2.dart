@@ -43,7 +43,7 @@ class _FriendsShoppingListState extends State<FriendsShoppingList> {
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                "Precio de la lista",
+                                crews[index].totalPrecio.toString(),
                                 style: TextStyle(
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold),

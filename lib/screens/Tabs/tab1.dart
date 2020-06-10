@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_firebase/models/crew.dart';
 import 'package:flutter_firebase/models/products_info.dart';
+import 'package:flutter_firebase/models/user.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingList extends StatefulWidget {
@@ -10,7 +12,25 @@ class ShoppingList extends StatefulWidget {
 
 class _ShoppingListState extends State<ShoppingList> {
   List<TextEditingController> _text;
-  bool _validate = false;
+
+  //VALIDO CUALES SON LOS PRODUCTOS QUE ELEGI ENTRE TODOS LOS DISPONIBLES
+  List<ProductsInfo> misProductos;
+  void mostrarProductos(List<ProductsInfo> products) {
+    int cont = 0;
+    for (var i = 0; i < products.length; i++) {
+      if (products[i].number > 0) {
+        cont++;
+      }
+    }
+    misProductos = new List(cont);
+    cont = 0;
+    for (var i = 0; i < products.length; i++) {
+      if (products[i].number > 0) {
+        misProductos[cont] = products[i];
+        cont++;
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -20,13 +40,31 @@ class _ShoppingListState extends State<ShoppingList> {
     }
   }
 
+  //CALCULO EL TOTAL DEL PRECIO DE TODOS LOS PRODUCTOS
+  double totalMisProductos(List<ProductsInfo> products) {
+    double total = 0;
+    for (var i = 0; i < products.length; i++) {
+      total += products[i].number.toDouble() * products[i].price;
+      print(products[i].number.toDouble());
+      print(products[i].price);
+    }
+    return total;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final productos = Provider.of<List<ProductsInfo>>(context, listen: false);
+    //MULTIPROVIDERS
+    final productos = Provider.of<List<ProductsInfo>>(context, listen: true);
+    final crews = Provider.of<List<CrewMember>>(context, listen: true);
+    final user = Provider.of<User>(context, listen: false);
+
+    //GENERO UNA LISTA CONTROLADORA DE TEXTFIELD
     _text = List.generate(productos.length, (i) => TextEditingController());
     for (var i = 0; i < _text.length; i++) {
       _text[i].text = productos[i].number.toString();
     }
+
+    //SCAFFOLD
     return Scaffold(
       appBar: AppBar(
         title: Text("My Shopping List"),
@@ -83,12 +121,17 @@ class _ShoppingListState extends State<ShoppingList> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           setState(() {
+            //VEO CUALES TEXTFIELD NO ESTAN VACIOS Y LOS GUARDO EN UN ARRAY QUE EN UN FUTURO SERAN MI LISTA
             for (var i = 0; i < _text.length; i++) {
               if (_text[i].text.isNotEmpty) {
                 productos[i].onChangeNumber(int.parse(_text[i].text));
-                _validate = false;
-              } else {
-                _validate = true;
+              }
+            }
+            //LLAMO LA  FUNCION PARA GUARDAR LOS PRODUCTOS EN MI LISTA
+            mostrarProductos(productos);
+            for (var i = 0; i < crews.length; i++) {
+              if (crews[i].uid == user.uid) {
+                crews[i].totalPrecio = totalMisProductos(misProductos).toInt();
               }
             }
           });

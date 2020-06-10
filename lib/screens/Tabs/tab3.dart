@@ -26,13 +26,14 @@ class _CompleteShoppingListState extends State<CompleteShoppingList> {
     }
   }
 
-  double total = 0;
-  void totalMisProductos(List<ProductsInfo> products) {
+  double totalMisProductos(List<ProductsInfo> products) {
+      double total = 0;
     for (var i = 0; i < products.length; i++) {
       total += products[i].number.toDouble() * products[i].price;
       print(products[i].number.toDouble());
       print(products[i].price);
     }
+    return total;
   }
 
   @override
@@ -98,7 +99,7 @@ class _CompleteShoppingListState extends State<CompleteShoppingList> {
           ),
           Expanded(
             child: Text(
-              'Total ' + total.toString(),
+              'Total ' + totalMisProductos(misProductos).toString(),
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
           ),
