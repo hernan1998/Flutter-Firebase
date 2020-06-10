@@ -4,7 +4,10 @@ import 'package:flutter_firebase/models/products_info.dart';
 import 'package:flutter_firebase/models/user.dart';
 import 'package:flutter_firebase/screens/wrapper.dart';
 import 'package:flutter_firebase/services/auth.dart';
+import 'package:flutter_firebase/services/database.dart';
 import 'package:provider/provider.dart';
+
+import 'models/crew.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,6 +25,7 @@ class MyApp extends StatelessWidget {
         FutureProvider<List<ProductsInfo>>(
           create: (_) => Products().search(),
         ),
+        StreamProvider<List<CrewMember>>.value(value: DatabaseService().crew),
       ],
       child: MaterialApp(
         home: Wrapper(),
