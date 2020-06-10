@@ -4,10 +4,7 @@ class ProductsInfo {
   final String category;
 
   ProductsInfo({this.name, this.price, this.category});
-
 }
-
-
 
 enum Category {
     VERDURA,
