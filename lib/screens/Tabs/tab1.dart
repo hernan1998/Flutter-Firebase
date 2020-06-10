@@ -31,7 +31,8 @@ class _ShoppingListState extends State<ShoppingList> {
                     elevation: 5.0,
                     margin: EdgeInsets.fromLTRB(20.0, 1.0, 20.0, 1.0),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      padding:
+                          const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -67,10 +68,7 @@ class _ShoppingListState extends State<ShoppingList> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.push(
-              context,
-              new MaterialPageRoute(
-                  builder: (context) => FriendsShoppingList()));
+          Navigator.pushNamed(context, '/tercera');
         },
         label: Text('Update'),
         icon: Icon(Icons.update),

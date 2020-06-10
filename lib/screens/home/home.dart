@@ -34,10 +34,8 @@ class Home extends StatelessWidget {
         body: CrewList(),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            //Con el navigator push lo mando ala vista de mis productos 
-            Navigator.push(context,
-                new MaterialPageRoute(builder: (context) => ShoppingList()));
-
+            //Con el navigator push lo mando ala vista de mis productos
+            Navigator.pushNamed(context, '/segunda');
           },
           label: Text('My List'),
           icon: Icon(Icons.local_mall),
