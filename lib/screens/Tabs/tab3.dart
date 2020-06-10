@@ -112,7 +112,7 @@ class _CompleteShoppingListState extends State<CompleteShoppingList> {
         label: Text('Close'),
         icon: Icon(Icons.close),
         backgroundColor: Colors.pink,
-      ),
+      ),  
     );
   }
 }

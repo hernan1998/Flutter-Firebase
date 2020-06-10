@@ -9,10 +9,24 @@ class ShoppingList extends StatefulWidget {
 }
 
 class _ShoppingListState extends State<ShoppingList> {
+  List<TextEditingController> _text;
+  bool _validate = false;
+
+  @override
+  void dispose() {
+    for (var i = 0; i < _text.length; i++) {
+      _text[i].dispose();
+      super.dispose();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final productos = Provider.of<List<ProductsInfo>>(context, listen: false);
-
+    _text = List.generate(productos.length, (i) => TextEditingController());
+    for (var i = 0; i < _text.length; i++) {
+      _text[i].text = productos[i].number.toString();
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text("My Shopping List"),
@@ -44,11 +58,7 @@ class _ShoppingListState extends State<ShoppingList> {
                             child: Container(
                               width: 50.0,
                               child: TextField(
-                                onChanged: (String value) {
-                                  productos[index].onChangeNumber(int.parse(value));
-                                  print(value);
-                                  print(productos[index].number);
-                                },
+                                controller: _text[index],
                                 keyboardType: TextInputType.number,
                                 inputFormatters: <TextInputFormatter>[
                                   WhitelistingTextInputFormatter.digitsOnly
@@ -72,6 +82,16 @@ class _ShoppingListState extends State<ShoppingList> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+          setState(() {
+            for (var i = 0; i < _text.length; i++) {
+              if (_text[i].text.isNotEmpty) {
+                productos[i].onChangeNumber(int.parse(_text[i].text));
+                _validate = false;
+              } else {
+                _validate = true;
+              }
+            }
+          });
           Navigator.pushNamed(context, '/tercera');
         },
         label: Text('Update'),
