@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase/models/products_info.dart';
 
 class CrewMember {
   final String name;
@@ -13,7 +12,6 @@ class CrewMember {
   Icon icono = new Icon(Icons.add,
       color: Colors.pinkAccent); //Icono de agrregar o quitar lista
   int totalPrecio = 0; //total precio de la lista
-  List<ProductsInfo> friendsLists;
 
   CrewMember({
     this.name,
