@@ -4,7 +4,7 @@ class ProductsInfo {
   final String category;
   int number=0;
 
-  ProductsInfo({this.name, this.price, this.category});
+  ProductsInfo({this.name, this.price, this.category, this.number});
 
   void onChangeNumber(int valor){
     number=valor;

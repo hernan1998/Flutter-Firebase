@@ -57,6 +57,17 @@ class DatabaseService {
     }).toList();
   }
 
+  // Friend List
+  List<ProductsInfo> _friendListaSnapshot(QuerySnapshot snapshot){
+    return snapshot.documents.map((doc){
+      return ProductsInfo(
+        name: doc.data['name'] ?? '',
+        category: doc.data['category'] ?? '',
+        price: doc.data['price'] ?? '',
+      ).onChangeNumber(doc.data['cant']);
+    }).toList();
+  }
+
   // Agrega un solo producto a la lista del usuario
   Future addProducts(String name, double price, String category, int number) async {
     return await userCollection.document(uid).collection('MiLista').document(name).setData({
@@ -70,6 +81,18 @@ class DatabaseService {
   // Borra productos de la lista del usuario
   Future deleteListProduct(String name) async {
     return await userCollection.document(uid).collection('MiLista').document(name).delete();
+  }
+
+  Future friendLists(CrewMember user) async  {
+   return userCollection.document(this.uid).collection('MiLista').snapshots().listen((data) =>{
+        data.documents.forEach((doc) => {
+          user.friendsLists.add(ProductsInfo(name: doc['name'], category: doc['category'], price: doc['price'], number: doc['cant']))
+        }) 
+    }); 
+  }
+
+  Stream<List<ProductsInfo>> get firendLista {
+    return userCollection.document(uid).collection('MiLista').snapshots().map(_friendListaSnapshot);
   }
 
   Stream<List<ProductsInfo>> get miLista {
