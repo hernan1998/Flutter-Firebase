@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_firebase/models/crew.dart';
@@ -101,7 +100,7 @@ class _ShoppingListState extends State<ShoppingList> {
             }),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: ()  {
+        onPressed: () {
           setState(() {
             //VEO CUALES TEXTFIELD NO ESTAN VACIOS Y LOS GUARDO EN UN ARRAY QUE EN UN FUTURO SERAN MI LISTA
             for (var i = 0; i < _text.length; i++) {
@@ -121,15 +120,18 @@ class _ShoppingListState extends State<ShoppingList> {
 
           // Limpia toda la lista del Usuario en FireStore
           productos.forEach((element) async {
-            await DatabaseService(uid: user.uid).deleteListProduct(element.name);
+            await DatabaseService(uid: user.uid)
+                .deleteListProduct(element.name);
           });
 
           // Agrega los productos seleccionados a la lista del usuario en FireStore
           misProductos.forEach((element) async {
-            DatabaseService(uid: user.uid).addProducts(element.name, element.price, element.category,element.number);
+            DatabaseService(uid: user.uid).addProducts(
+                element.name, element.price, element.category, element.number);
           });
 
-          DatabaseService(uid: user.uid).totalUserList(c.totalMisProductos(misProductos));
+          DatabaseService(uid: user.uid)
+              .totalUserList(c.totalMisProductos(misProductos));
           Navigator.pop(context);
           Navigator.pushNamed(context, '/tercera');
         },
