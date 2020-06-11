@@ -131,6 +131,7 @@ class _ShoppingListState extends State<ShoppingList> {
 
           DatabaseService(uid: user.uid).totalUserList(c.totalMisProductos(misProductos));
           Navigator.pop(context);
+          Navigator.pushNamed(context, '/tercera');
         },
         label: Text('Update'),
         icon: Icon(Icons.update),
