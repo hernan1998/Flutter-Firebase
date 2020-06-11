@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_firebase/models/crew.dart';
+import 'package:flutter_firebase/models/products_info.dart';
 
 class DatabaseService {
 
@@ -24,6 +25,12 @@ class DatabaseService {
     });
   }
 
+  Future totalUserList(double total) async{
+    return await userCollection.document(uid).updateData({
+      'total': total,
+    });
+  }
+
   // Crew List
   List<CrewMember> _crewListSnapshot(QuerySnapshot snapshot){
     return snapshot.documents.map((doc){
@@ -37,7 +44,37 @@ class DatabaseService {
     }).toList();
   }
 
-  // gets To Do's stream
+  // Product List
+  List<ProductsInfo> _miListaSnapshot(QuerySnapshot snapshot){
+    return snapshot.documents.map((doc){
+      return ProductsInfo(
+        name: doc.data['name'] ?? '',
+        category: doc.data['category'] ?? '',
+        price: doc.data['price'] ?? '',
+      ).onChangeNumber(doc.data['cant']);
+    }).toList();
+  }
+
+  // Agrega un solo producto a la lista del usuario
+  Future addProducts(String name, double price, String category, int number) async {
+    return await userCollection.document(uid).collection('MiLista').document(name).setData({
+      'name': name,
+      'category': category,
+      'price': price,
+      'cant': number,
+    });
+  }
+
+  // Borra productos de la lista del usuario
+  Future deleteListProduct(String name) async {
+    return await userCollection.document(uid).collection('MiLista').document(name).delete();
+  }
+
+  Stream<List<ProductsInfo>> get miLista {
+    return userCollection.document(uid).collection('MiLista').snapshots().map(_miListaSnapshot);
+  }
+
+  // gets Users's stream
   Stream<List<CrewMember>> get crew {
     return userCollection.snapshots().map(_crewListSnapshot);
   }
