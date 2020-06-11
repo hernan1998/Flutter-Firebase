@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/models/products_info.dart';
+import 'package:flutter_firebase/services/calculos.dart';
 import 'package:provider/provider.dart';
 
 class CompleteShoppingList extends StatefulWidget {
@@ -9,39 +10,13 @@ class CompleteShoppingList extends StatefulWidget {
 
 class _CompleteShoppingListState extends State<CompleteShoppingList> {
   List<ProductsInfo> misProductos;
-  void mostrarProductos(List<ProductsInfo> products) {
-    int cont = 0;
-    for (var i = 0; i < products.length; i++) {
-      if (products[i].number > 0) {
-        cont++;
-      }
-    }
-    misProductos = new List(cont);
-    cont = 0;
-    for (var i = 0; i < products.length; i++) {
-      if (products[i].number > 0) {
-        misProductos[cont] = products[i];
-        cont++;
-      }
-    }
-  }
-
-  double totalMisProductos(List<ProductsInfo> products) {
-      double total = 0;
-    for (var i = 0; i < products.length; i++) {
-      total += products[i].number.toDouble() * products[i].price;
-      print(products[i].number.toDouble());
-      print(products[i].price);
-    }
-    return total;
-  }
+  Calculo c = new Calculo();
 
   @override
   Widget build(BuildContext context) {
     final List<ProductsInfo> productos =
         Provider.of<List<ProductsInfo>>(context, listen: false);
-    mostrarProductos(productos);
-    totalMisProductos(misProductos);
+    misProductos = c.mostrarProductos(productos);
     return Scaffold(
       appBar: AppBar(
         title: Text("Shopping List"),
@@ -99,7 +74,7 @@ class _CompleteShoppingListState extends State<CompleteShoppingList> {
           ),
           Expanded(
             child: Text(
-              'Total ' + totalMisProductos(misProductos).toString(),
+              'Total ' + c.totalMisProductos(misProductos).toString(),
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
           ),
@@ -113,7 +88,7 @@ class _CompleteShoppingListState extends State<CompleteShoppingList> {
         label: Text('Close'),
         icon: Icon(Icons.close),
         backgroundColor: Colors.pink,
-      ),  
+      ),
     );
   }
 }

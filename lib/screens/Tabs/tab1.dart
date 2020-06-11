@@ -4,6 +4,7 @@ import 'package:flutter_firebase/models/crew.dart';
 import 'package:flutter_firebase/models/products_info.dart';
 import 'package:flutter_firebase/models/user.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_firebase/services/calculos.dart';
 
 class ShoppingList extends StatefulWidget {
   @override
@@ -12,25 +13,8 @@ class ShoppingList extends StatefulWidget {
 
 class _ShoppingListState extends State<ShoppingList> {
   List<TextEditingController> _text;
-
-  //VALIDO CUALES SON LOS PRODUCTOS QUE ELEGI ENTRE TODOS LOS DISPONIBLES
   List<ProductsInfo> misProductos;
-  void mostrarProductos(List<ProductsInfo> products) {
-    int cont = 0;
-    for (var i = 0; i < products.length; i++) {
-      if (products[i].number > 0) {
-        cont++;
-      }
-    }
-    misProductos = new List(cont);
-    cont = 0;
-    for (var i = 0; i < products.length; i++) {
-      if (products[i].number > 0) {
-        misProductos[cont] = products[i];
-        cont++;
-      }
-    }
-  }
+  Calculo c = new Calculo();
 
   @override
   void dispose() {
@@ -38,17 +22,6 @@ class _ShoppingListState extends State<ShoppingList> {
       _text[i].dispose();
       super.dispose();
     }
-  }
-
-  //CALCULO EL TOTAL DEL PRECIO DE TODOS LOS PRODUCTOS
-  double totalMisProductos(List<ProductsInfo> products) {
-    double total = 0;
-    for (var i = 0; i < products.length; i++) {
-      total += products[i].number.toDouble() * products[i].price;
-      print(products[i].number.toDouble());
-      print(products[i].price);
-    }
-    return total;
   }
 
   @override
@@ -127,11 +100,12 @@ class _ShoppingListState extends State<ShoppingList> {
                 productos[i].onChangeNumber(int.parse(_text[i].text));
               }
             }
-            //LLAMO LA  FUNCION PARA GUARDAR LOS PRODUCTOS EN MI LISTA
-            mostrarProductos(productos);
+            //LLAMO LA  FUNCION PARA GUARDAR LOS PRECIOS PRODUCTOS EN MI LISTA
+            misProductos = c.mostrarProductos(productos);
             for (var i = 0; i < crews.length; i++) {
               if (crews[i].uid == user.uid) {
-                crews[i].totalPrecio = totalMisProductos(misProductos).toInt();
+                crews[i].totalPrecio =
+                    c.totalMisProductos(misProductos).toInt();
               }
             }
           });
