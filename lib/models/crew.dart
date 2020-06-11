@@ -18,6 +18,7 @@ class CrewMember {
     this.phone,
     this.uid,
     this.url,
+    this.totalPrecio
   });
 
   void setTotalPrecio(int precio) {

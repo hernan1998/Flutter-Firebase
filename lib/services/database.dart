@@ -40,6 +40,7 @@ class DatabaseService {
         phone: doc.data['phone'] ?? '',
         uid: doc.data['uid'] ?? '',
         url: doc.data['url'] ?? '',
+        totalPrecio: doc.data['total'] ?? '0',
       );
     }).toList();
   }
