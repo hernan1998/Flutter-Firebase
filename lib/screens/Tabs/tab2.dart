@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/models/crew.dart';
+import 'package:flutter_firebase/models/user.dart';
 import 'package:provider/provider.dart';
 
 class FriendsShoppingList extends StatefulWidget {
@@ -11,7 +12,7 @@ class _FriendsShoppingListState extends State<FriendsShoppingList> {
   @override
   Widget build(BuildContext context) {
     final crews = Provider.of<List<CrewMember>>(context, listen: true);
-
+    final user = Provider.of<User>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -31,6 +32,12 @@ class _FriendsShoppingListState extends State<FriendsShoppingList> {
             padding: const EdgeInsets.all(8),
             itemCount: crews.length,
             itemBuilder: (BuildContext context, int index) {
+              String nombre = "";
+              if (crews[index].uid == user.uid) {
+                nombre = "My List";
+              } else {
+                nombre = crews[index].name + " " + crews[index].lastname;
+              }
               return Column(
                 children: <Widget>[
                   Card(
@@ -44,13 +51,13 @@ class _FriendsShoppingListState extends State<FriendsShoppingList> {
                           Column(
                             children: <Widget>[
                               Text(
-                                crews[index].name + " " + crews[index].lastname,
+                                nombre,
                                 style: TextStyle(
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                crews[index].totalPrecio.toString(),
+                                crews[index].total,
                                 style: TextStyle(
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold),
@@ -58,15 +65,17 @@ class _FriendsShoppingListState extends State<FriendsShoppingList> {
                             ],
                           ),
                           RawMaterialButton(
-                            onPressed: () {
-                              setState(() {
-                                if (crews[index].agregarLista == false) {
-                                  crews[index].onSelectList(true);
-                                } else {
-                                  crews[index].onSelectList(false);
-                                }
-                              });
-                            },
+                            onPressed: crews[index].uid != user.uid
+                                ? () {
+                                    setState(() {
+                                      if (crews[index].agregarLista == false) {
+                                        crews[index].onSelectList(true);
+                                      } else {
+                                        crews[index].onSelectList(false);
+                                      }
+                                    });
+                                  }
+                                : null,    
                             elevation: 2.0,
                             fillColor: Colors.white,
                             child: crews[index].icono,
