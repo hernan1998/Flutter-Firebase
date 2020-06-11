@@ -16,6 +16,7 @@ class DatabaseService {
       'lastname': lastname,
       'phone': phone,
       'uid': uid,
+      'total': '0',
     });
   }
 
@@ -27,7 +28,7 @@ class DatabaseService {
 
   Future totalUserList(double total) async{
     return await userCollection.document(uid).updateData({
-      'total': total,
+      'total': total.toString(),
     });
   }
 
@@ -40,7 +41,7 @@ class DatabaseService {
         phone: doc.data['phone'] ?? '',
         uid: doc.data['uid'] ?? '',
         url: doc.data['url'] ?? '',
-        totalPrecio: doc.data['total'] ?? '0',
+        total: doc.data['total'] ?? '',
       );
     }).toList();
   }

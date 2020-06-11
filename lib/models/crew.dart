@@ -7,6 +7,7 @@ class CrewMember {
   final String phone;
   final String uid;
   final String url;
+  final String total;
   bool agregarLista = false; //Agregar a mi lista para comprar su mercado
   Icon icono = new Icon(Icons.add,
       color: Colors.pinkAccent); //Icono de agrregar o quitar lista
@@ -18,7 +19,7 @@ class CrewMember {
     this.phone,
     this.uid,
     this.url,
-    this.totalPrecio
+    this.total,
   });
 
   void setTotalPrecio(int precio) {
