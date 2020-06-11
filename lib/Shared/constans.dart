@@ -10,3 +10,5 @@ const TextInputDecoration = InputDecoration(
     borderSide: BorderSide(color: Colors.pink, width: 2.0) 
   ), 
 );
+
+const KTextStyle=TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
