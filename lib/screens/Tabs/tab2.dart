@@ -14,6 +14,13 @@ class _FriendsShoppingListState extends State<FriendsShoppingList> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pushNamed(context, '/segunda');
+          },
+        ),
         title: Text("Friend's Shopping List"),
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
@@ -79,6 +86,7 @@ class _FriendsShoppingListState extends State<FriendsShoppingList> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+          Navigator.pop(context);
           Navigator.pushNamed(context, '/cuarta');
         },
         label: Text('Refresh'),

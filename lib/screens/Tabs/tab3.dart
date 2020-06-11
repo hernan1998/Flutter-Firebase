@@ -19,6 +19,13 @@ class _CompleteShoppingListState extends State<CompleteShoppingList> {
     misProductos = c.mostrarProductos(productos);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pushNamed(context, '/tercera');
+          },
+        ),
         title: Text("Shopping List"),
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
@@ -83,7 +90,8 @@ class _CompleteShoppingListState extends State<CompleteShoppingList> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.pushNamed(context, '/tercera');
+          Navigator.pop(context);
+          Navigator.pushNamed(context, '/');
         },
         label: Text('Close'),
         icon: Icon(Icons.close),
